@@ -22,6 +22,7 @@ export default Vue.extend({
   methods: {
     handleInput(event: any) {
       event.target.value;
+      this.$emit("input", event.target.value);
     },
     addTodo() {
       console.log("add");

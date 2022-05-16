@@ -3,7 +3,7 @@
     <TodoHeader />
     <div class="todo-container">
       <TodoPasingButtons />
-      <TodoInput :item="todoText" />
+      <TodoInput :item="todoText" @input="updateTodoText" />
       <TodoList />
     </div>
   </div>
@@ -27,6 +27,11 @@ export default Vue.extend({
     return {
       todoText: "",
     };
+  },
+  methods: {
+    updateTodoText(value: any) {
+      this.todoText = value;
+    },
   },
 });
 </script>
