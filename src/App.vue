@@ -1,29 +1,50 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <TodoHeader />
+    <div class="todo-container">
+      <TodoPasingButtons />
+      <TodoInput :item="todoText" />
+      <TodoList />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
+import TodoHeader from "./components/TodoHeader.vue";
+import TodoPasingButtons from "./components/TodoPasingButtons.vue";
+import TodoInput from "./components/TodoInput.vue";
+import TodoList from "./components/TodoList.vue";
 
 export default Vue.extend({
-  name: "App",
   components: {
-    HelloWorld,
+    TodoHeader,
+    TodoPasingButtons,
+    TodoInput,
+    TodoList,
+  },
+  data() {
+    return {
+      todoText: "",
+    };
   },
 });
 </script>
 
 <style>
+@import "./assets/css/reset.css";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  width: 80vw;
+  margin: 5vh auto;
+}
+.todo-container {
+  box-shadow: 1px 1px 10px 3px #e0e0e0;
+  padding: 2%;
 }
 </style>
