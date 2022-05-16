@@ -1,24 +1,17 @@
-# vue-ts_til_todolist
+## Vue2 + TypeScript + Vuex를 이용한 TodoList 웹 앱
 
-## Project setup
-```
-npm install
-```
+#### 목표
+- 습득한 기술을 프로젝트를 수행하며 직접 체감하고 한 번 더 숙지하는 것에 의의를 두는 프로젝트 
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+#### 기술 스택
+- Vue 2.6.14
+- Vue Router
+- Vuex
+- TypeScript
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+#### 개발 환경
+- Chrome
+- Git
+- Visual Studio Code
+- Node.js (v16 이상)
+- Vue.js Dev Tools
