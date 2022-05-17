@@ -1,11 +1,13 @@
 <template>
   <div id="app">
-    <TodoHeader />
-    <div class="todo-container">
+    <header>
+      <TodoHeader />
+    </header>
+    <main class="todo-container">
       <TodoPasingButtons />
-      <TodoInput :item="todoText" @input="updateTodoText" />
+      <TodoInput :item="todoText" @input="updateTodoText" @add="addTodoItem" />
       <TodoList />
-    </div>
+    </main>
   </div>
 </template>
 
@@ -15,6 +17,19 @@ import TodoHeader from "./components/TodoHeader.vue";
 import TodoPasingButtons from "./components/TodoPasingButtons.vue";
 import TodoInput from "./components/TodoInput.vue";
 import TodoList from "./components/TodoList.vue";
+
+const STORAGE_KEY = "vue-ts_todolist";
+const storage = {
+  save(todoItems: any[]) {
+    const parsed = JSON.stringify(todoItems);
+    localStorage.setItem(STORAGE_KEY, parsed);
+  },
+  fetch() {
+    const todoItems = localStorage.getItem(STORAGE_KEY) || "[]";
+    const result = JSON.parse(todoItems);
+    return result;
+  },
+};
 
 export default Vue.extend({
   components: {
@@ -26,12 +41,29 @@ export default Vue.extend({
   data() {
     return {
       todoText: "",
+      todoItems: [] as any[],
     };
   },
   methods: {
-    updateTodoText(value: any) {
+    updateTodoText(value: string) {
       this.todoText = value;
     },
+    addTodoItem() {
+      const value = this.todoText;
+      // this.todoItems.push(value);
+      // storage.save(this.todoItems);
+      localStorage.setItem(value, value);
+      this.initTodoText();
+    },
+    initTodoText() {
+      this.todoText = "";
+    },
+    fetchTodoItems() {
+      this.todoItems = storage.fetch();
+    },
+  },
+  created() {
+    this.fetchTodoItems();
   },
 });
 </script>

@@ -18,14 +18,19 @@ import Vue from "vue";
 // import { VueEvent } from "@/types/index";
 
 export default Vue.extend({
-  props: ["item"],
+  props: {
+    item: {
+      type: String,
+      required: true,
+    },
+  },
   methods: {
-    handleInput(event: any) {
-      event.target.value;
-      this.$emit("input", event.target.value);
+    handleInput(event: InputEvent) {
+      const eventTarget = event.target as HTMLInputElement;
+      this.$emit("input", eventTarget.value);
     },
     addTodo() {
-      console.log("add");
+      this.$emit("add");
     },
   },
 });
