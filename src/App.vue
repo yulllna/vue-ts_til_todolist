@@ -6,7 +6,7 @@
     <main class="todo-container">
       <TodoPasingButtons />
       <TodoInput :item="todoText" @input="updateTodoText" @add="addTodoItem" />
-      <TodoList />
+      <TodoList :todoItem="todoItems" @remove="removeTodoItem" />
     </main>
   </div>
 </template>
@@ -50,9 +50,9 @@ export default Vue.extend({
     },
     addTodoItem() {
       const value = this.todoText;
-      // this.todoItems.push(value);
-      // storage.save(this.todoItems);
-      localStorage.setItem(value, value);
+      this.todoItems.push(value);
+      storage.save(this.todoItems);
+      // localStorage.setItem(value, value);
       this.initTodoText();
     },
     initTodoText() {
@@ -60,6 +60,10 @@ export default Vue.extend({
     },
     fetchTodoItems() {
       this.todoItems = storage.fetch();
+    },
+    removeTodoItem(index: number) {
+      this.todoItems.splice(index, 1);
+      storage.save(this.todoItems);
     },
   },
   created() {

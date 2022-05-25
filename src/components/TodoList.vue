@@ -12,19 +12,40 @@
     </div>
     <div class="listitem-container">
       <ul>
-        <li class="listitem">
+        <li class="listitem" v-for="(items, index) in todoItem" :key="index">
           <input type="checkbox" />
-          <span>item1</span>
-          <button>삭제</button>
+          <span>{{ todoItem[index] }}</span>
+          <button @click="removeItem(index)">삭제</button>
         </li>
       </ul>
     </div>
   </div>
 </template>
 
-<script>
-export default {};
+<script lang="ts">
+import Vue from "vue";
+
+export default Vue.extend({
+  // data() {
+  //   return {
+  //     index: index,
+  //   };
+  // },
+  props: {
+    todoItem: {
+      type: Array,
+      required: true,
+    },
+  },
+  methods: {
+    removeItem(index: number) {
+      this.$emit("remove", index);
+    },
+  },
+});
 </script>
+
+<style scoped></style>
 
 <style scoped>
 .todolist-wrap {
