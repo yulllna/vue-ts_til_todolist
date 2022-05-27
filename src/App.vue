@@ -6,7 +6,11 @@
     <main class="todo-container">
       <TodoPasingButtons />
       <TodoInput :item="todoText" @input="updateTodoText" @add="addTodoItem" />
-      <TodoList :todoItem="todoItems" @remove="removeTodoItem" />
+      <TodoList
+        :todoItem="todoItems"
+        @remove="removeTodoItem"
+        @toggle="toggleTodoItemComplete"
+      />
     </main>
   </div>
 </template>
@@ -20,7 +24,7 @@ import TodoList from "./components/TodoList.vue";
 
 const STORAGE_KEY = "vue-ts_todolist";
 const storage = {
-  save(todoItems: any[]) {
+  save(todoItems: Todo[]) {
     const parsed = JSON.stringify(todoItems);
     localStorage.setItem(STORAGE_KEY, parsed);
   },
@@ -30,6 +34,11 @@ const storage = {
     return result;
   },
 };
+
+export interface Todo {
+  title: string;
+  done: boolean;
+}
 
 export default Vue.extend({
   components: {
@@ -41,7 +50,7 @@ export default Vue.extend({
   data() {
     return {
       todoText: "",
-      todoItems: [] as any[],
+      todoItems: [] as Todo[],
     };
   },
   methods: {
@@ -50,7 +59,11 @@ export default Vue.extend({
     },
     addTodoItem() {
       const value = this.todoText;
-      this.todoItems.push(value);
+      const todo: Todo = {
+        title: value,
+        done: false,
+      };
+      this.todoItems.push(todo);
       storage.save(this.todoItems);
       // localStorage.setItem(value, value);
       this.initTodoText();
@@ -63,6 +76,15 @@ export default Vue.extend({
     },
     removeTodoItem(index: number) {
       this.todoItems.splice(index, 1);
+      storage.save(this.todoItems);
+    },
+    toggleTodoItemComplete(todoItem: Todo, index: number) {
+      this.todoItems.splice(index, 1, {
+        ...todoItem[index],
+        done: !todoItem[index].done,
+      });
+      // console.log(todoItem[index].title);
+      // console.log(this.todoItems);
       storage.save(this.todoItems);
     },
   },
